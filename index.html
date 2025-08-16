@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Finder</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #87ceeb, #ffffff); /* Day default */
+      overflow: hidden;
+    }
+
+    /* 🌌 Starry Night Background */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* Glassmorphism card */
+    .card {
+      position: relative;
+      z-index: 1;
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    /* ⌨️ Typewriter Heading */
+    .typewriter {
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      border-right: .15em solid orange;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .1em;
+      animation: typing 3s steps(20, end), blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: orange; }
+    }
+
+    input {
+      padding: 10px;
+      width: 200px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #ff9800;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e68900;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌌 Stars container -->
+  <div class="stars" id="stars"></div>
+
+  <div class="card">
+    <h1 class="typewriter">Weather Finder</h1>
+    <form action="/weather" method="POST">
+      <input type="text" name="city" placeholder="Enter city..." required>
+      <br>
+      <button type="submit">Check Weather</button>
+    </form>
+  </div>
+
+  <script>
+    // 🌌 Generate stars dynamically
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDuration = (2 + Math.random() * 3) + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // 🌓 Change background based on time
+    const hour = new Date().getHours();
+    if (hour >= 18 || hour < 6) {
+      // Night
+      document.body.style.background = "linear-gradient(to bottom, #0d1b2a, #000)";
+    } else {
+      // Day
+      document.body.style.background = "linear-gradient(to bottom, #87ceeb, #ffffff)";
+      starsContainer.style.display = "none"; // Hide stars during day
+    }
+  </script>
+</body>
+</html>

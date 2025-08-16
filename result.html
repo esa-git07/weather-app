@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather in {{ city }}</title>
+     <link rel="icon"href="https://cdn-icons-png.flaticon.com/512/414/414825.png"type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body style="background: {{ gradient }};" class="centered">
+
+    <!-- Weather animation full-screen -->
+    <div class="weather-animation">
+        {% if "cloud" in weather.lower() %}
+            <div class="cloud"></div>
+            <div class="cloud cloud2"></div>
+        {% elif "rain" in weather.lower() %}
+            <div class="cloud"></div>
+            <div class="rain"></div>
+        {% elif "clear" in weather.lower() %}
+            <div class="sun"></div>
+        {% endif %}
+    </div>
+
+    <!-- Card stays in the center -->
+    <div class="card">
+        {% if error %}
+            <h1>❌ {{ error }}</h1>
+            <a href="/">Go Back</a>
+        {% else %}
+            <h1>Weather in {{ city }}</h1>
+            <img src="http://openweathermap.org/img/wn/{{ icon }}@4x.png" alt="Weather Icon">
+            <h2>{{ temp }}°C</h2>
+            <p>{{ weather }}</p>
+            <p class="clothing">{{ clothing }}</p>
+            <a href="/">Search Again</a>
+        {% endif %}
+    </div>
+</body>
+
+
+</html>
